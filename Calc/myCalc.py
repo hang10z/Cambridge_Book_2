@@ -7,7 +7,25 @@ from decimal import *
 
 # key/button click function
 def click(key):
-    display.insert(END, key)
+    # Pressing the equals key means calculate:
+    if key == "=":
+        try:
+            result = display.get()
+            result = eval(result)
+            result = str(result)
+            display.insert(END, " = " + result)
+        except:
+            display.insert(END, " --->  ERRROR!")
+
+    # pressing c key means clear screen
+    elif key == "CLR":
+        display.delete(0,END)
+
+    # add the other key-pressed values to the end of current entry:
+    else:
+        display.insert(END, key)
+
+
 
 ##### main:
 window = Tk()
@@ -37,7 +55,9 @@ r = 0   #row counter
 c = 0   #column counter
 
 for btn_text in num_pad_list:
-    Button(num_pad, text=btn_text, width=5, command=click).grid(row=r, column=c)
+    def cmd(x=btn_text):
+        click(x)
+    Button(num_pad, text=btn_text, width=5, command=cmd).grid(row=r, column=c)
     c=c+1
     if c > 2:
         c=0
@@ -51,25 +71,27 @@ operator_list = [
     '*', '/',
     '+', '-',
     '(', ')',
-    ]
+    'CLR']
 
 # Create the operator Buttons with a loop
 r=0
 c=0
 for btn_text in operator_list:
-    Button(operator, text=btn_text, width=5, command=click).grid(row=r, column=c)
+    def cmd(x=btn_text):
+        click(x)
+    Button(operator, text=btn_text, width=5, command=cmd).grid(row=r, column=c)
     c=c+1
     if c > 1:
         c=0
         r=r+1
 
 #Create bottom_row Frame for Large Button
-bottom_row = Frame(window)
-bottom_row.grid(row=6, column=0, columnspan=2)
+##bottom_row = Frame(window)
+##bottom_row.grid(row=6, column=0, columnspan=2)
 
 #Create large button
-btn_text = "CLEAR"
-btn_clear = Button(bottom_row, text=btn_text, width=45, command=click).grid(row=1, column=0)
+##btn_text = "CLEAR"
+##btn_clear = Button(bottom_row, text=btn_text, width=45, command=clear).grid(row=1, column=0)
 
 
 ##### Run MainLoop
