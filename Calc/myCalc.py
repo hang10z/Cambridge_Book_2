@@ -51,7 +51,7 @@ operator_list = [
     '*', '/',
     '+', '-',
     '(', ')',
-    'CLR']
+    ]
 
 # Create the operator Buttons with a loop
 r=0
@@ -62,6 +62,15 @@ for btn_text in operator_list:
     if c > 1:
         c=0
         r=r+1
+
+#Create bottom_row Frame for Large Button
+bottom_row = Frame(window)
+bottom_row.grid(row=6, column=0, columnspan=2)
+
+#Create large button
+btn_text = "CLEAR"
+btn_clear = Button(bottom_row, text=btn_text, width=45, command=click).grid(row=1, column=0)
+
 
 ##### Run MainLoop
 window.mainloop()
